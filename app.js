@@ -3,42 +3,27 @@ globalThis.users = [
 ]
 const express = require('express');
 const cors = require('cors');
-const swaggerUi = require('swagger-ui-express');
-const swaggerJsDoc = require('swagger-jsdoc');
 
 // routes 
 const booksRouter = require('./routes/books');
-
-
-const swaggerOptions = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Book API',
-            version: '1.0.0',
-            description: 'A simple Express API',
-        },
-        servers: [
-            {
-                url: 'http://localhost:3000/',
-            }
-        ],
-    },
-    apis: ['./routes/*.js']
-}
-
-const specs = swaggerJsDoc(swaggerOptions);
+const docsRouter = require('./routes/docs');
 
 const app = express();
 app.use(cors());
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     res.send('Hello World');
 })
 
+// docs 
+app.use('/docs', docsRouter);
 app.use('/books', booksRouter);
+
+app.get('/users', (req, res) => {
+    res.send(globalThis.users);
+})
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
