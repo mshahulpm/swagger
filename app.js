@@ -12,6 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'))
 
 app.get('/', (req, res) => {
     res.send('Hello World');
@@ -25,6 +26,6 @@ app.get('/users', (req, res) => {
     res.send(globalThis.users);
 })
 
-app.listen(3000, () => {
+app.listen(5000, () => {
     console.log('Server is running on port 3000');
 })

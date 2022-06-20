@@ -1,2 +1,4 @@
 node_modules
 _git_init.sh
+public/swagger.html
+public/swagger.json
