@@ -14,18 +14,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-})
 
 // docs 
 app.use('/docs', docsRouter);
 app.use('/books', booksRouter);
+
+app.post('/form', (req, res) => {
+    console.log(req.body)
+    res.redirect('/')
+})
 
 app.get('/users', (req, res) => {
     res.send(globalThis.users);
 })
 
 app.listen(5000, () => {
-    console.log('Server is running on port 3000');
+    console.log('Server is running on port 5000');
 })
